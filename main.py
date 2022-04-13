@@ -29,11 +29,11 @@ def hello_http(request):
         response.headers.add("Access-Control-Allow-Headers", "*")
         response.headers.add("Access-Control-Allow-Methods", "*")
         return response
+    import anova
     response = send_file('static/anova.png', mimetype='blob')
     response.headers.add("Access-Control-Allow-Origin", "*")
     response.headers.add("Access-Control-Allow-Headers", "*")
     response.headers.add("Access-Control-Allow-Methods", "*")
-    import anova
     print('arribat dsps anova')
     return response
 
