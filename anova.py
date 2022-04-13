@@ -1,8 +1,10 @@
+import tempfile
 import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
 import matplotlib
 matplotlib.use('Agg')
+
 
 # load data file
 df = pd.read_csv(
@@ -17,4 +19,6 @@ df_melt.columns = ['index', 'treatments', 'value']
 # easily detect the differences between different treatments
 ax = sns.boxplot(x='treatments', y='value', data=df_melt, color='#99c2a2')
 ax = sns.swarmplot(x="treatments", y="value", data=df_melt, color='#7d0013')
-plt.savefig('static/anova.png')
+tmpdir = tempfile.gettempdir()
+print('tmp dir inside anova', tmpdir)
+plt.savefig(tmpdir + '/anova.png')

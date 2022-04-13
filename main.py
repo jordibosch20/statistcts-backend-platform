@@ -2,6 +2,7 @@ import mimetypes
 from flask import jsonify, Flask, make_response, send_file
 from flask_cors import CORS
 import functions_framework
+import tempfile
 
 app = Flask(__name__)
 CORS(app)
@@ -30,7 +31,9 @@ def hello_http(request):
         response.headers.add("Access-Control-Allow-Methods", "*")
         return response
     import anova
-    response = send_file('static/anova.png', mimetype='blob')
+    tmpdir = tempfile.gettempdir()
+    print('tmpdir in main is', tmpdir)
+    response = send_file(tmpdir + '/anova.png', mimetype='blob')
     response.headers.add("Access-Control-Allow-Origin", "*")
     response.headers.add("Access-Control-Allow-Headers", "*")
     response.headers.add("Access-Control-Allow-Methods", "*")
