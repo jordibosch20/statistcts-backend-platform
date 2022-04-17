@@ -1,23 +1,56 @@
-import mimetypes
-from anova import generateBoxPlot
-from ttest import generateStatistics
-from parseInput import parseInput
-from flask import jsonify, Flask, make_response, send_file
-from flask_cors import CORS
-import functions_framework
+from Models.AnovaModel import AnovaModel
+from Models.TTest import TTestModel
+from anova import Anova
+from ttest import TTest
+from pydantic import BaseModel
+from fastapi import FastAPI
+from typing import List, Optional
+import json
 import tempfile
-
-app = Flask(__name__)
-CORS(app)
+from fastapi.responses import RedirectResponse, FileResponse
 
 
+import uvicorn
+from fastapi import FastAPI, Form, Header
+from fastapi.middleware.cors import CORSMiddleware
+from starlette.responses import JSONResponse
+
+app = FastAPI()
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins="*",
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+
+@app.get("/")
+async def root():
+    return {"hello_world": 'hello_world'}
+
+
+@app.post("/ttest")
+async def computeHypothesis(tTestModel: TTestModel):
+    (statistic, pvalue) = TTest.generateStatistics(tTestModel.tTestValues)
+    return {'tTest': pvalue, 'statistic': statistic}
+
+
+@app.post("/anova")
+async def computeHypothesis(anovaModel: AnovaModel):
+    Anova.generateBoxPlot(anovaModel.anovaValues)
+    tmpdir = tempfile.gettempdir()
+    return FileResponse(tmpdir + '/anova.png', media_type='image/png')
+    # return {'anova': anovaModel}
+
+
+"""
 def requestFlight(request):
     response = make_response()
     response.headers.add("Access-Control-Allow-Origin", "*")
     response.headers.add("Access-Control-Allow-Headers", "*")
     response.headers.add("Access-Control-Allow-Methods", "*")
     return response
-
 
 @functions_framework.http
 def hello_http(request):
@@ -53,3 +86,4 @@ def hello_t_test(request):
     response.headers.add("Access-Control-Allow-Headers", "*")
     response.headers.add("Access-Control-Allow-Methods", "*")
     return response
+ """
