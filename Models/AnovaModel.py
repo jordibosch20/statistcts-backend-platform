@@ -3,5 +3,5 @@ from pydantic import BaseModel
 
 
 class AnovaModel(BaseModel):
-    significanceLevel: float
+    significanceLevel: float = 0.05
     anovaValues: List[List[float]]
