@@ -1,6 +1,5 @@
 import scipy.stats as stats
 import numpy as np
-from flask_restful import Resource
 
 
 class TTest():
