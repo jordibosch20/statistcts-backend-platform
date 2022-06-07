@@ -36,15 +36,38 @@ async def computeHypothesis(tTestModel: TTestModel):
     return {'tTest': pvalue, 'statistic': statistic}
 
 
+@app.post("/anova/homocedasticity")
+async def homocedasticity(anovaModel: AnovaModel):
+    anova = Anova(anovaModel.anovaValues)
+    return anova.checkHomocedasticity()
+
+
+@app.post("/anova/normalityComputation")
+async def homocedasticity(anovaModel: AnovaModel):
+    anova = Anova(anovaModel.anovaValues)
+    return anova.computeNormality()
+
+
+@app.post("/anova/anovaTukey")
+async def comptueTukey(anovaModel: AnovaModel):
+    anova = Anova(anovaModel.anovaValues)
+    return anova.comptueTukey()
+
+
+@app.post("/anova/anovaComputation")
+async def computeAnova(anovaModel: AnovaModel):
+    anova = Anova(anovaModel.anovaValues)
+    return anova.computeAnova()
+
+
 @app.post("/anova/{numberImage}")
 async def computeHypothesis(numberImage, anovaModel: AnovaModel):
+    anova = Anova(anovaModel.anovaValues)
     if (numberImage == 'first'):
-        anova = Anova(anovaModel.anovaValues)
         anova.generateBoxPlot()
         tmpdir = tempfile.gettempdir()
         return FileResponse(tmpdir + '/anova.png', media_type='image/png')
-    """ elif(numberImage == 'second'):
-        Anova.generateBoxPlot(anovaModel.anovaValues)
+    elif(numberImage == 'second'):
+        anova.checkNormality()
         tmpdir = tempfile.gettempdir()
-        return FileResponse(tmpdir + '/anova.png', media_type='image/png') """
-# return {'anova': anovaModel}
+        return FileResponse(tmpdir + '/anova2.png', media_type='image/png')
