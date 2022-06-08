@@ -21,4 +21,14 @@ def mapColumnNames(colName):
         return 'Partial Eta Squared'
     if(colName == 'normal'):
         return 'Is Normal'
+    if(colName == 'diff'):
+        return 'Difference'
+    if(colName == 'p-tukey'):
+        return 'P-value Tukey'
+    if(colName == 'hedge'):
+        return 'Hedges'
+    if(colName == 'T'):
+        return 'T Statistic'
+    if(colName == 'se'):
+        return 'Se'
     return colName
