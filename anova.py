@@ -1,5 +1,6 @@
 import os
 from parseInput import parseInput
+from shared import mapColumnNames
 import numpy as np
 from scipy.stats import f_oneway
 import tempfile
@@ -76,8 +77,10 @@ class Anova():
     def computeNormality(self):
         # Test de normalidad Shapiro-Wilk
         normality = pg.normality(data=self.data, dv='Quantitative Variable',
-                     group='Treatments')
+                                 group='Treatments')
         columnsNames = normality.columns.values.tolist()
+        columnsNames = map(mapColumnNames, columnsNames)
+        columnsNames = list(columnsNames)
         values = normality.to_numpy().tolist()
         return [columnsNames, values]
 
@@ -85,6 +88,8 @@ class Anova():
         homocedasticity = pg.homoscedasticity(
             data=self.data, dv='Quantitative Variable', group='Treatments', method='levene')
         columnsNames = homocedasticity.columns.values.tolist()
+        columnsNames = map(mapColumnNames, columnsNames)
+        columnsNames = list(columnsNames)
         values = homocedasticity.to_numpy().tolist()
         return [columnsNames, values]
 
@@ -93,6 +98,8 @@ class Anova():
             data=self.data, dv='Quantitative Variable', between='Treatments', detailed=True)
         anova = anova.fillna(-1)
         columnsNames = anova.columns.values.tolist()
+        columnsNames = map(mapColumnNames, columnsNames)
+        columnsNames = list(columnsNames)
         values = anova.to_numpy().tolist()
         return [columnsNames, values]
 
@@ -100,5 +107,7 @@ class Anova():
         tukey = pg.pairwise_tukey(
             data=self.data, dv='Quantitative Variable', between='Treatments').round(3)
         columnsNames = tukey.columns.values.tolist()
+        columnsNames = map(mapColumnNames, columnsNames)
+        columnsNames = list(columnsNames)
         values = tukey.to_numpy().tolist()
         return [columnsNames, values]
