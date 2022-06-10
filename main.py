@@ -39,13 +39,13 @@ async def computeHypothesis(tTestModel: TTestModel):
 @app.post("/anova/homocedasticity")
 async def homocedasticity(anovaModel: AnovaModel):
     anova = Anova(anovaModel.anovaValues)
-    return anova.checkHomocedasticity()
+    return anova.computeHomocedasticityTest()
 
 
 @app.post("/anova/normalityComputation")
 async def homocedasticity(anovaModel: AnovaModel):
     anova = Anova(anovaModel.anovaValues)
-    return anova.computeNormality()
+    return anova.computeNormalityTest()
 
 
 @app.post("/anova/anovaTukey")
@@ -68,6 +68,6 @@ async def computeHypothesis(numberImage, anovaModel: AnovaModel):
         tmpdir = tempfile.gettempdir()
         return FileResponse(tmpdir + '/anova.png', media_type='image/png')
     elif(numberImage == 'second'):
-        anova.checkNormality()
+        anova.generateNormalityPlot()
         tmpdir = tempfile.gettempdir()
         return FileResponse(tmpdir + '/anova2.png', media_type='image/png')
