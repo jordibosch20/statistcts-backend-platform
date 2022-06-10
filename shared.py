@@ -25,7 +25,7 @@ def mapColumnNames(colName):
         return 'Difference'
     if(colName == 'p-tukey'):
         return 'P-value Tukey'
-    if(colName == 'hedge'):
+    if(colName == 'hedges'):
         return 'Hedges'
     if(colName == 'T'):
         return 'T Statistic'

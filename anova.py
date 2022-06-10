@@ -36,7 +36,7 @@ class Anova():
         return data
 
     def generateBoxPlot(self):
-        fig, ax = plt.subplots(1, 1, figsize=(8, 4))
+        fig, ax = plt.subplots(1, 1, figsize=(7, 4))
         sns.boxplot(x="Treatments", y="Quantitative Variable",
                     data=self.data, ax=ax)
         sns.swarmplot(x="Treatments", y="Quantitative Variable",
@@ -49,7 +49,7 @@ class Anova():
         plt.title("Boxplot")
         tmpdir = tempfile.gettempdir()
         numberRows = math.ceil(self.numberTreatments / 2)
-        fig, axs = plt.subplots(numberRows, 2, figsize=(10, 7))
+        fig, axs = plt.subplots(numberRows, 2, figsize=(8, 6))
         if(self.numberTreatments % 2 == 0):
             for i in range(0, numberRows):
                 pg.qqplot(self.data.loc[self.data.Treatments ==
