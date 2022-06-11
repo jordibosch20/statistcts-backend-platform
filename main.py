@@ -31,9 +31,9 @@ async def root(item_id):
 
 
 @app.post("/ttest")
-async def computeHypothesis(tTestModel: TTestModel):
-    (statistic, pvalue) = TTest.generateStatistics(tTestModel.tTestValues)
-    return {'tTest': pvalue, 'statistic': statistic}
+async def ttest(tTestModel: TTestModel):
+    ttest = TTest(tTestModel.tTestValues)
+    return ttest.computeTTest()
 
 
 @app.post("/anova/homocedasticity")
