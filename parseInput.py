@@ -44,7 +44,15 @@ class ParseInput():
         tmpdir = tempfile.gettempdir()
         numberRows = math.ceil(self.numberTreatments / 2)
         fig, axs = plt.subplots(numberRows, 2, figsize=(8, 6))
-        if(self.numberTreatments % 2 == 0):
+        if(self.numberTreatments == 2):
+            pg.qqplot(self.data.loc[self.data.Treatments ==
+                                    'Treatment' + str(1), 'Quantitative Variable'], dist='norm', ax=axs[0])
+            axs[0].set_title('Treatment' + str(1))
+            pg.qqplot(self.data.loc[self.data.Treatments ==
+                                    'Treatment' + str(2), 'Quantitative Variable'], dist='norm', ax=axs[1])
+            axs[1].set_title('Treatment' + str(2))
+            plt.tight_layout()
+        elif(self.numberTreatments % 2 == 0):
             for i in range(0, numberRows):
                 pg.qqplot(self.data.loc[self.data.Treatments ==
                                         'Treatment' + str(2*i + 1), 'Quantitative Variable'], dist='norm', ax=axs[i, 0])
@@ -55,6 +63,7 @@ class ParseInput():
             plt.tight_layout()
         else:
             for i in range(0, numberRows - 1):
+                print('axs are', axs)
                 pg.qqplot(self.data.loc[self.data.Treatments ==
                                         'Treatment' + str(2*i + 1), 'Quantitative Variable'], dist='norm', ax=axs[i, 0])
                 axs[i, 0].set_title('Treatment' + str(2*i + 1))

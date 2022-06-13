@@ -14,7 +14,6 @@ class Anova(ParseInput):
 
     def __init__(self, list):
         super().__init__(list)
-        self.generateNormalityPlot()
 
     def computeAnova(self):
         anova = pg.anova(
