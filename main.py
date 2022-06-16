@@ -1,6 +1,8 @@
 from Models.AnovaModel import AnovaModel
 from Models.TTest import TTestModel
 from anova import Anova
+from Models.KolmogorovSmirnov import KolmogorovSmirnovModel
+from kolmogorovsmirnov import KolmogorovSmirnov
 from ttest import TTest
 from pydantic import BaseModel
 from fastapi import FastAPI
@@ -8,7 +10,6 @@ from typing import List, Optional
 import json
 import tempfile
 from fastapi.responses import RedirectResponse, FileResponse
-
 import os
 import uvicorn
 from fastapi import FastAPI, Form, Header
@@ -34,6 +35,13 @@ async def root(item_id):
 async def ttest(tTestModel: TTestModel):
     ttest = TTest(tTestModel.tTestValues)
     return ttest.computeTTest()
+
+
+@app.post("/kolmogorov-smirnov")
+async def kolmogorovSmirnov(kolmogorovSmirnov: KolmogorovSmirnovModel):
+    kolmogorovSmirnov = KolmogorovSmirnov(
+        kolmogorovSmirnov.kolmogorovSmirnovValues)
+    return kolmogorovSmirnov.computeKolmogorovSmirnov()
 
 
 @app.post("/anova/homocedasticity")

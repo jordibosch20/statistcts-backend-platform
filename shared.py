@@ -25,10 +25,20 @@ def mapColumnNames(colName):
         return 'Difference'
     if(colName == 'p-tukey'):
         return 'P-value Tukey'
+    if(colName == 'p-val'):
+        return 'P-value'
     if(colName == 'hedges'):
         return 'Hedges'
+    if(colName == 'dof'):
+        return 'Degrees of Freedom'
+    if(colName == 'alternative'):
+        return 'Alternative'
+    if(colName == 'cohen-d'):
+        return 'Standardised difference'
     if(colName == 'T'):
         return 'T Statistic'
+    if(colName == 'power'):
+        return 'Power'
     if(colName == 'se'):
         return 'Se'
     return colName
